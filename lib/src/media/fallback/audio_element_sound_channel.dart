@@ -1,4 +1,10 @@
-part of stagexl.media;
+import 'dart:async';
+import 'dart:html' show AudioElement;
+
+import 'package:stagexl/src/media/fallback/audio_element_sound.dart';
+
+import '../../events.dart';
+import '../audio.dart';
 
 class AudioElementSoundChannel extends SoundChannel {
 
@@ -28,7 +34,7 @@ class AudioElementSoundChannel extends SoundChannel {
     _soundTransform = soundTransform;
     _loop = loop;
 
-    audioElementSound._requestAudioElement(this).then(_onAudioElement);
+    audioElementSound.requestAudioElement(this).then(_onAudioElement);
   }
 
   //---------------------------------------------------------------------------
@@ -91,7 +97,7 @@ class AudioElementSoundChannel extends SoundChannel {
       // we can't set the audio element
     } else {
       var volume1 = _soundTransform.volume;
-      var volume2 = SoundMixer._audioElementMixer.volume;
+      var volume2 = implGetAudioElementMixer.volume;
       _audioElement.volume = volume1 * volume2;
     }
   }
@@ -104,7 +110,7 @@ class AudioElementSoundChannel extends SoundChannel {
       _position = this.position;
       _audioElement.pause();
       _audioElement.currentTime = 0;
-      _audioElementSound._releaseAudioElement(_audioElement);
+      _audioElementSound.releaseAudioElement(_audioElement);
       _audioElement = null;
     }
     if (_volumeChangedSubscription != null) {
@@ -123,10 +129,10 @@ class AudioElementSoundChannel extends SoundChannel {
 
   void _onAudioElement(AudioElement audioElement) {
 
-    var mixer = SoundMixer._audioElementMixer;
+    var mixer = implGetAudioElementMixer;
 
     if (_stopped) {
-      _audioElementSound._releaseAudioElement(audioElement);
+      _audioElementSound.releaseAudioElement(audioElement);
     } else {
       _audioElement = audioElement;
       _audioElement.currentTime = _startTime;
@@ -170,7 +176,7 @@ class AudioElementSoundChannel extends SoundChannel {
     _audioElement.volume = _soundTransform.volume * volume;
   }
 
-  void _onAudioEnded() {
+  void onAudioEnded() {
     if (this.loop) {
       // The loop is restarted by the complete timer.
     } else {

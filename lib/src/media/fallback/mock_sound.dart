@@ -1,4 +1,7 @@
-part of stagexl.media;
+import 'dart:async';
+
+import '../audio.dart';
+import 'mock_sound_channel.dart';
 
 class MockSound extends Sound {
 

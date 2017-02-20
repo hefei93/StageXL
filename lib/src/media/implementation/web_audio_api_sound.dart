@@ -1,4 +1,4 @@
-part of stagexl.media;
+part of stagexl.media.audio;
 
 class WebAudioApiSound extends Sound {
 
@@ -28,7 +28,8 @@ class WebAudioApiSound extends Sound {
     }
 
     if (options.ignoreErrors) {
-      return MockSound.load(url, options);
+      await fallback.loadLibrary();
+      return fallback.MockSound.load(url, options);
     } else {
       throw aggregateError;
     }
@@ -50,7 +51,8 @@ class WebAudioApiSound extends Sound {
       return new WebAudioApiSound._(audioBuffer);
     } catch (e) {
       if (options.ignoreErrors) {
-        return MockSound.loadDataUrl(dataUrl, options);
+        await fallback.loadLibrary();
+        return fallback.MockSound.loadDataUrl(dataUrl, options);
       } else {
         throw new LoadError("Failed to load sound.", e);
       }

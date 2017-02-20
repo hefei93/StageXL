@@ -1,4 +1,11 @@
-part of stagexl.media;
+import 'dart:async';
+import 'dart:html' as html;
+import 'dart:html' show  AudioElement;
+
+import '../../internal/audio_loader.dart';
+import '../audio.dart';
+import 'audio_element_sound_channel.dart';
+import 'mock_sound.dart';
 
 class AudioElementSound extends Sound {
 
@@ -80,7 +87,7 @@ class AudioElementSound extends Sound {
 
   //---------------------------------------------------------------------------
 
-  Future<AudioElement> _requestAudioElement(
+  Future<AudioElement> requestAudioElement(
       AudioElementSoundChannel soundChannel) async {
 
     for(var audioElement in _soundChannels.keys) {
@@ -99,14 +106,14 @@ class AudioElementSound extends Sound {
     return audioElement;
   }
 
-  void _releaseAudioElement(AudioElement audioElement) {
+  void releaseAudioElement(AudioElement audioElement) {
     _soundChannels[audioElement] = null;
   }
 
   void _onAudioEnded(html.Event event) {
     var audioElement = event.target;
     var soundChannel = _soundChannels[audioElement];
-    if (soundChannel != null) soundChannel._onAudioEnded();
+    if (soundChannel != null) soundChannel.onAudioEnded();
   }
 
 }

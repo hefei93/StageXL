@@ -1,4 +1,4 @@
-part of stagexl.media;
+part of stagexl.media.audio;
 
 class AudioElementMixer {
 

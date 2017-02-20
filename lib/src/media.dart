@@ -1,5 +1,5 @@
 /// The sound classes make it very easy to play audio even if a browser
-/// does not support the latest and greates underlying audio API.
+/// does not support the latest and greatest underlying audio API.
 ///
 /// Since browsers do support different audio codecs, the library will also
 /// load the correct sample for the browser automatically. Store your audio
@@ -22,31 +22,13 @@
 library stagexl.media;
 
 import 'dart:async';
-import 'dart:math';
-import 'dart:convert';
 import 'dart:html' as html;
-import 'dart:html' show HttpRequest, AudioElement, VideoElement;
-import 'dart:typed_data';
-import 'dart:web_audio';
+import 'dart:html' show VideoElement;
 
 import 'errors.dart';
-import 'events.dart';
-import 'internal/audio_loader.dart';
 import 'internal/video_loader.dart';
 
-part 'media/sound.dart';
-part 'media/sound_channel.dart';
-part 'media/sound_engine.dart';
-part 'media/sound_load_options.dart';
-part 'media/sound_mixer.dart';
-part 'media/sound_transform.dart';
+export 'media/audio.dart' hide implGetAudioElementMixer;
+
 part 'media/video.dart';
 part 'media/video_load_options.dart';
-part 'media/implementation/audio_element_mixer.dart';
-part 'media/implementation/audio_element_sound.dart';
-part 'media/implementation/audio_element_sound_channel.dart';
-part 'media/implementation/mock_sound.dart';
-part 'media/implementation/mock_sound_channel.dart';
-part 'media/implementation/web_audio_api_mixer.dart';
-part 'media/implementation/web_audio_api_sound.dart';
-part 'media/implementation/web_audio_api_sound_channel.dart';

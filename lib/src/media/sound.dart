@@ -1,4 +1,4 @@
-part of stagexl.media;
+part of stagexl.media.audio;
 
 abstract class Sound {
 
@@ -27,15 +27,18 @@ abstract class Sound {
   ///     var sound = await Sound.load("assets/audio/hello.mp3");
   ///     sound.play();
 
-  static Future<Sound> load(String url, [SoundLoadOptions soundLoadOptions]) {
+  static Future<Sound> load(String url,
+      [SoundLoadOptions soundLoadOptions]) async {
     var options = soundLoadOptions ?? Sound.defaultLoadOptions;
     switch (options.engine ?? SoundMixer.engine) {
       case SoundEngine.WebAudioApi:
         return WebAudioApiSound.load(url, options);
       case SoundEngine.AudioElement:
-        return AudioElementSound.load(url, options);
+        await fallback.loadLibrary();
+        return fallback.AudioElementSound.load(url, options);
       default:
-        return MockSound.load(url, options);
+        await fallback.loadLibrary();
+        return fallback.MockSound.load(url, options);
     }
   }
 
@@ -48,16 +51,18 @@ abstract class Sound {
   ///     sound.play();
 
   static Future<Sound> loadDataUrl(
-      String dataUrl, [SoundLoadOptions soundLoadOptions]) {
+      String dataUrl, [SoundLoadOptions soundLoadOptions]) async {
 
     var options = soundLoadOptions ?? Sound.defaultLoadOptions;
     switch (options.engine ?? SoundMixer.engine) {
       case SoundEngine.WebAudioApi:
         return WebAudioApiSound.loadDataUrl(dataUrl, options);
       case SoundEngine.AudioElement:
-        return AudioElementSound.loadDataUrl(dataUrl, options);
+        await fallback.loadLibrary();
+        return fallback.AudioElementSound.loadDataUrl(dataUrl, options);
       default:
-        return MockSound.loadDataUrl(dataUrl, options);
+        await fallback.loadLibrary();
+        return fallback.MockSound.loadDataUrl(dataUrl, options);
     }
   }
 

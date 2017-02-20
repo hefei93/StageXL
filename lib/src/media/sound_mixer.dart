@@ -1,4 +1,6 @@
-part of stagexl.media;
+part of stagexl.media.audio;
+
+AudioElementMixer get implGetAudioElementMixer => SoundMixer._audioElementMixer;
 
 class SoundMixer {
 

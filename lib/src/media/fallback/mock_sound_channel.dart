@@ -1,4 +1,7 @@
-part of stagexl.media;
+import '../../events.dart';
+import '../../media.dart';
+import '../audio.dart';
+import 'mock_sound.dart';
 
 class MockSoundChannel extends SoundChannel {
 
@@ -6,9 +9,6 @@ class MockSoundChannel extends SoundChannel {
   bool _stopped = false;
   bool _paused = false;
   bool _loop = false;
-  num _startTime = 0.0;
-  num _duration = 0.0;
-  num _position = 0.0;
 
   SoundTransform _soundTransform;
 
